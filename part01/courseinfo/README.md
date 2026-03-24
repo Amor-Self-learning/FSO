@@ -1,31 +1,6 @@
-Exercises 1.1.-1.2.
-The exercises are submitted via GitHub, and by marking the exercises as done in the "my submissions" tab of the submission application.
-
-The exercises are submitted one part at a time. When you have submitted the exercises for a part of the course you can no longer submit undone exercises for the same part.
-
-Note that in this part, there are more exercises besides those found below. Do not submit your work until you have completed all of the exercises you want to submit for the part.
-
-You may submit all the exercises of this course into the same repository, or use multiple repositories. If you submit exercises of different parts into the same repository, please use a sensible naming scheme for the directories.
-
-One very functional file structure for the submission repository is as follows:
-
-part0
-part1
-  courseinfo
-  unicafe
-  anecdotes
-part2
-  phonebook
-  countriescopy
-See this example submission repository!
-
-For each part of the course, there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
-
-Most of the exercises of the course build a larger application, eg. courseinfo, unicafe and anecdotes in this part, bit by bit. It is enough to submit the completed application. You can make a commit after each exercise, but that is not compulsory. For example the course info app is built in exercises 1.1.-1.5. It is just the end result after 1.5 that you need to submit!
-
-For each web application for a series of exercises, it is recommended to submit all files relating to that application, except for the directory node_modules.
-
-1.1: Course Information, step 1
+# Exercises 1.1.-1.5.
+## Exercises 1.1.-1.2.
+### 1.1: Course Information, step 1
 The application that we will start working on in this exercise will be further developed in a few of the following exercises. In this and other upcoming exercise sets in this course, it is enough to only submit the final state of the application. If desired, you may also create a commit for each exercise of the series, but this is entirely optional.
 
 Use Vite to initialize a new application. Modify main.jsx to match the following
@@ -86,7 +61,7 @@ const App = () => {
   )
 }
 ```
-WARNING Don't try to program all the components concurrently, because that will almost certainly break down the whole app. Proceed in small steps, first make e.g. the component Header and only when it works for sure, you could proceed to the next component.
+> WARNING Don't try to program all the components concurrently, because that will almost certainly break down the whole app. Proceed in small steps, first make e.g. the component Header and only when it works for sure, you could proceed to the next component.
 
 Careful, small-step progress may seem slow, but it is actually by far the fastest way to progress. Famous software developer Robert "Uncle Bob" Martin has stated
 
@@ -94,7 +69,7 @@ Careful, small-step progress may seem slow, but it is actually by far the fastes
 
 that is, according to Martin, careful progress with small steps is even the only way to be fast.
 
-1.2: Course Information, step 2
+### 1.2: Course Information, step 2
 Refactor the Content component so that it does not render any names of parts or their number of exercises by itself. Instead, it only renders three Part components of which each renders the name and number of exercises of one part.
 ```jsx
 const Content = ... {
@@ -109,3 +84,115 @@ const Content = ... {
 ```
 Our application passes on information in quite a primitive way at the moment, since it is based on individual variables. We shall fix that in part 2, but before that, let's go to part1b to learn about JavaScript.
 
+
+## Exercises 1.3.-1.5.
+We continue building the application that we started working on in the previous exercises. You can write the code into the same project since we are only interested in the final state of the submitted application.
+
+Pro-tip: you may run into issues when it comes to the structure of the props that components receive. A good way to make things more clear is by printing the props to the console, e.g. as follows:
+```jsx
+const Header = (props) => {
+  console.log(props)
+  return <h1>{props.course}</h1>
+}
+```
+
+### 1.3: Course Information step 3
+
+Let's move forward to using objects in our application. Modify the variable definitions of the App component as follows and also refactor the application so that it still works:
+
+```jsx
+const App = () => {
+  const course = 'Half Stack application development'
+  const part1 = {
+    name: 'Fundamentals of React',
+    exercises: 10
+  }
+  const part2 = {
+    name: 'Using props to pass data',
+    exercises: 7
+  }
+  const part3 = {
+    name: 'State of a component',
+    exercises: 14
+  }
+
+  return (
+    <div>
+      ...
+    </div>
+  )
+}
+```
+### 1.4: Course Information step 4
+Place the objects into an array. Modify the variable definitions of App into the following form and modify the other parts of the application accordingly:
+```jsx
+const App = () => {
+  const course = 'Half Stack application development'
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
+
+  return (
+    <div>
+      ...
+    </div>
+  )
+}
+```
+> NB at this point you can assume that there are always three items, so there is no need to go through the arrays using loops. We will come back to the topic of rendering components based on items in arrays with a more thorough exploration in the next part of the course.
+
+> However, do not pass different objects as separate props from the App component to the components Content and Total. Instead, pass them directly as an array:
+
+```jsx
+const App = () => {
+  // const definitions
+
+  return (
+    <div>
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total parts={parts} />
+    </div>
+  )
+}
+```
+### 1.5: Course Information step 5
+Let's take the changes one step further. Change the course and its parts into a single JavaScript object. Fix everything that breaks.
+```jsx
+const App = () => {
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
+
+  return (
+    <div>
+      ...
+    </div>
+  )
+}
+```
