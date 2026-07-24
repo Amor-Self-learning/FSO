@@ -47,10 +47,10 @@ const App = () => {
         personService.create({name: newName, number : newNumber}
       ).then (
         person => {
-          showMessage(`Added ${person.name}`, true)
           setPersons(persons.concat(person))
+          showMessage(`Added ${person.name}`, true)
         }
-      )
+      ).catch(error => showMessage(error.message, false))
     };
     setNewName('');
     setNewNumber('');
@@ -65,7 +65,7 @@ const App = () => {
       ).catch ( e => {
         showMessage(`information of ${person.name} has already been removed from the server.`, false);
       }).finally (() => {
-        personService.getAll().then(allpersons => setPersons(allpersons));
+        setPersons(persons.filter(p => p.id !== person.id));
       })
     }
   };
