@@ -1,15 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+require('dotenv').config();
+const Person = require('./models/person');
 const app = express();
-app.use(express.static('dist'))
 
+app.use(express.static('dist'))
 app.use(express.json());
 morgan.token('body', (req) => JSON.stringify(req.body));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
-
-const generateId = () => {
-  return String(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
-}
 
 let persons = [
     { 
@@ -35,7 +33,9 @@ let persons = [
 ];
 
 app.get('/api/persons', (req, res) => {
-  res.json(persons);
+  Person.find({}).then(persons => {
+    res.json(persons)
+  })
 });
 
 app.get('/api/info', (req, res) => {
@@ -43,28 +43,36 @@ app.get('/api/info', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
-  const id = req.params.id;
-  const person = persons.find(person => person.id === id);
-  if (!person) {
-    return res.status(404).json({error : `person with id ${id} not found`})
-  } 
-  res.json(person);
-});
+  Person.findById(req.params.id).then(note => {
+    if (note) {
+      res.json(note);
+    } else {
+      res.status(404).end()
+    }
+  })
+  .catch (e => {
+    console.log(e.message);
+    res.status(400).json({error: 'malformed id'});
+  })
+})
 
 app.post('/api/persons', (req, res) => {
   const body = req.body;
   if (!body.name && !body.number) {
     return res.status(400).json(({error: "name or number missing"}));
-  } else if (persons.find(person => person.name === body.name)) {
-    return res.status(400).json({error : 'name must be unique'});
-  }
-  const person = {
-    name : req.body.name,
-    number : req.body.number,
-    id : generateId(),
-  }
-  persons.push(person);
-  res.json(person);
+  } 
+  Person.findOne({name : body.name}).then(person => {
+    if (person) return res.status(400).json({error : 'name must be unique'})
+    else {
+      const person = new Person({
+        name : body.name,
+        number : body.number,
+      })
+      person.save().then(person =>
+        res.json(person)
+      )
+    }
+  });
 })
 
 app.delete('/api/persons/:id', (req, res) => {
