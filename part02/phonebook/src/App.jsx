@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -35,10 +34,10 @@ const App = () => {
     ) {
       const person = persons.find(person => person.name === newName);
       personService.update(person.id, {...person, number: newNumber}).then(
-        resp => {
+        () => {
           showMessage(`${person.name}'s number has been updated`, true);
         }
-      ).catch(e => {
+      ).catch(() => {
         showMessage(`information of ${newName} has already been removed from the server.`, false);
       }).finally(() => personService.getAll().then( allPersons => setPersons(allPersons))
       )
@@ -59,10 +58,10 @@ const App = () => {
   const deletePerson = person => {
     if(confirm(`Delete ${person.name}?`)) {
       personService.del(person.id).then (
-        resp => {
+        () => {
           showMessage(`Deleted ${person.name}`, true);
         }
-      ).catch ( e => {
+      ).catch ( () => {
         showMessage(`information of ${person.name} has already been removed from the server.`, false);
       }).finally (() => {
         setPersons(persons.filter(p => p.id !== person.id));
@@ -74,7 +73,7 @@ const App = () => {
 
   return (
     <>
-    <h2>Phonebook</h2>
+    <h1>Phonebook</h1>
     {message && <Notification message={message} messageSuccess={messageSuccess}/>}
     <Filter filter={filter} setFilter={setFilter} />
     <h2>Add a new</h2>

@@ -1,3 +1,8 @@
+body {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: whitesmoke;
+}
+
 .error {
   color: red;
   background: lightgrey;
@@ -16,4 +21,63 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+}
+
+#root {
+  font-size: calc(0.8rem + 0.25vw);
+  width: calc(200px + 20vw);
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+.input-div {
+  display: flex;
+  flex-direction: column;
+  gap : 8px;
+}
+input {
+  background: inherit;
+  color: inherit;
+  height: 1.5rem;
+  font: inherit;
+  border : 2px salmon solid;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+input:focus {
+  outline: 1px solid darksalmon;
+}
+button {
+  font: inherit;
+  width: fit-content;
+  padding: 0.3rem 0.5rem;
+  background-color: lightsalmon;
+  border-radius: 0.5rem;
+  border : none;
+  margin: 0 auto;
+}
+
+button:hover {
+  cursor: pointer;
+  transform: translateY(1px);
+  transition: transform 0.2s ease-in-out;
+  outline: 2px solid salmon;
+}
+.all-persons {
+  width: 100%;
+  border-collapse: collapse;
+  gap: 0.5rem;
+}
+
+tbody {
+  text-align: center;
+}
+tr {
+  border-bottom: 1px dotted gray;
+}
+tr:hover {
+  background-color: rgba(255, 160, 122, 0.5);
 }
