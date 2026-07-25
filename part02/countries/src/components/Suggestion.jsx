@@ -1,6 +1,9 @@
 const Suggestion = ({countryName, setQuery}) => {
   return (
-    <div>{countryName} <button onClick={() => setQuery(countryName)}>show</button></div>
+    <div className="suggestion">
+      <p>{countryName}</p>
+      <button onClick={() => setQuery(countryName)}>show</button>
+    </div>
   )
 }
 

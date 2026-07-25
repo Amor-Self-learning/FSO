@@ -5,42 +5,51 @@ import Suggestion from './components/Suggestion';
 
 const App = () => {
   const [query, setQuery] = useState('');
-  const [countries, setCountries] = useState([]);
-
+  const [countriesData, setCountriesData] = useState([]);
+  const [matchedCountries, setMatchedCountries] = useState([]);
   useEffect (() => {
-    if (query === "") return;
-    const delaySearch = setTimeout(() => {
-      axios.get('http://localhost:3000/all')
+      axios.get('https://studies.cs.helsinki.fi/restcountries/api/all')
       .then(
         resp => {
-          const data = resp.data.filter(
-            country => country.name.common.toLowerCase().includes(query.trim().toLowerCase())
-          )
-          setCountries(data);
+          setCountriesData(resp.data);
         }
       )
-    }, 300)
-    return () => clearTimeout(delaySearch);
-  }, [query])
+    }, [])
 
-  return (
-    <>
-      <div>Find Countries: <input value={query} onChange={e => setQuery(e.target.value)} /></div>
-      {countries &&
-        countries.length === 1
-        ? 
-        <Country country={countries[0]}/>
-        : 
-        countries.length <= 10 
-        ?
-        countries.map (
-          country => <Suggestion key={country.ccn3} setQuery={setQuery} countryName={country.name.common} />
-        ) 
-        :
-        <p>Too many matches, specify another filter</p>
-      }
-    </>
-  )
-}
+  const updateMatchedCountries = (query) => {
+    setMatchedCountries(countriesData.filter(country => country.name.common.toLowerCase().includes(query.toLowerCase())));
+  }
+
+  const handleQueryChange = e => {
+    setQuery(e.target.value);
+    updateMatchedCountries(e.target.value);
+  }
+  if (countriesData.length === 0) {
+    return <div className="loading">
+      Loading Data...
+    </div>
+  } else {
+    return (
+      <>
+        <div className="input-div">
+          <label htmlFor="search">Find Countries: </label>
+          <input id="search" value={query} onChange={(e) => handleQueryChange(e)} />
+        </div>
+        {matchedCountries &&
+          matchedCountries.length === 1
+          ? 
+          <Country country={matchedCountries[0]}/>
+          : 
+          matchedCountries.length <= 10 
+          ?
+          matchedCountries.map (
+            country => <Suggestion key={country.ccn3} setQuery={setQuery} countryName={country.name.common} />
+          ) 
+          :
+          <p>Too many matches, specify another filter</p>
+        }
+      </>
+    )
+  }}
 
 export default App;
