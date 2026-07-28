@@ -98,6 +98,38 @@ test('A blog with a missing title or url can\'t be added', async () => {
   assert.strictEqual(allBlogsAtEnd.body.length, allBlogsAtStart.body.length);
 });
 
+test('A blog can be deleted', async () => {
+  const allBlogsAtStart = await api.get('/api/blogs');
+  const blogToDelete = allBlogsAtStart.body[0];
+  await api 
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+  const allBlogsAtEnd = await api.get('/api/blogs');
+  assert(allBlogsAtEnd.body.length, allBlogsAtStart.body.length - 1);
+  const allIds = allBlogsAtEnd.body.map(blog => blog.id);
+  assert(!allIds.includes(blogToDelete.id));
+})
+
+test('A blog can be updated', async () => {
+  const allBlogsAtStart = await api.get('/api/blogs');
+  const blogToUpdate = allBlogsAtStart.body[0];
+  const updateBlog = {
+    title: 'async/await is modern and easy',
+    author: 'Abdul Samad',
+    url: 'https://amorzephyr/blog/5a422aa71b54a676234d18f8.pdf',
+    likes: 5,
+  }
+  await api 
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(updateBlog)
+    .expect(200)
+
+  const allBlogsAtEnd = await api.get('/api/blogs');
+  assert(allBlogsAtEnd.body.length, allBlogsAtStart.body.length + 1);
+  assert.deepStrictEqual(allBlogsAtEnd.body[0], {...updateBlog, id: blogToUpdate.id})
+})
+
 after(async () => {
   mongoose.connection.close();
 })
