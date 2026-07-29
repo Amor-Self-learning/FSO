@@ -35,7 +35,7 @@ describe('User with and invalid username or password can\'t be added', () => {
       .expect(400);
     
     const usersAtEnd = await api.get('/api/users');
-    assert.strictEqual(usersAtStart.length, usersAtEnd.length);
+    assert.strictEqual(usersAtStart.body.length, usersAtEnd.body.length);
   })
 
   test ('User with invalid or missing password can\'t be added', async () => {
@@ -53,7 +53,7 @@ describe('User with and invalid username or password can\'t be added', () => {
       .expect(400);
     
     const usersAtEnd = await api.get('/api/users');
-    assert.strictEqual(usersAtStart.length, usersAtEnd.length);
+    assert.strictEqual(usersAtStart.body.length, usersAtEnd.body.length);
   })
 }) 
 
