@@ -6,6 +6,10 @@ const blogSchema = mongoose.Schema({
   author: String,
   url: String,
   likes: Number,
+  user: {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : 'User'
+  }
 });
 
 blogSchema.set('toJSON', {
@@ -17,8 +21,5 @@ blogSchema.set('toJSON', {
 })
 
 const Blog = mongoose.model('Blog', blogSchema);
-
-const mongoUrl = config.MONGODB_URI;
-mongoose.connect(mongoUrl, { family: 4 });
 
 module.exports = Blog;

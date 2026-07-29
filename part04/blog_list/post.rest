@@ -1,9 +1,0 @@
-POST http://localhost:3000/api/blogs
-Content-Type: application/json
-
-{
-  "title": "Express JS",
-  "author": "Abdul Samad",
-  "url": "https://amorzephyr.com/blog/h9724jlf24oruwo8rr2",
-  "likes": 200
-}
