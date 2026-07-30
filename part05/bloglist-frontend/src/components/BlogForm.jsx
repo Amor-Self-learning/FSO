@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const BlogForm = ({action, user, addToBlogs, showMessage}) => {
+const BlogForm = ({action, user, addToBlogs, setMessage, setBlogFormVisible}) => {
 
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -15,11 +15,12 @@ const BlogForm = ({action, user, addToBlogs, showMessage}) => {
         Authorization: `Bearer ${user.token}`
       }
     })
-    addToBlogs({...res.data, user : {username: user.username}});
-    showMessage({text: `Added a new blog ${title} by ${author}`, ok: true});
+    addToBlogs({...res.data, user : {id: res.data.user, username : user.username, name : user.name}});
+    setMessage({text: `Added a new blog ${title} by ${author}`, ok: true});
     setTitle('');
     setAuthor('');
     setUrl('');
+    setBlogFormVisible(false);
   }
   return (
     <form action={action}>
@@ -53,7 +54,8 @@ const BlogForm = ({action, user, addToBlogs, showMessage}) => {
           onChange={e => setUrl(e.target.value)}
           required/>
       </div>
-      <button onClick={addBlog} type='button'>Add</button>
+      <button onClick={addBlog} type='button'>Create</button>
+      <button onClick={() => setBlogFormVisible(false)}>Cancel</button>
     </form>
   )
 }

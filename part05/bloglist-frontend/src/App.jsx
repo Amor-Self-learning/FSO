@@ -9,21 +9,15 @@ import BlogForm from './components/BlogForm';
 function App() {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState({});
-  const [message, setMessage] = useState({});
-
-  const showMessage = (message) => {
-    setMessage(message);
-    setTimeout(() => {
-      setMessage('');
-    }, 5000);
-  }
+  const [message, setMessage] = useState(null);
+  const [blogFormVisible, setBlogFormVisible] = useState(false);
 
   useEffect( () => { const fetchBlogs = async () => {
       try {
         const data = await blogService.getAll();
         setBlogs(data);
       } catch (e) {
-        showMessage({text: e.message, ok: false});
+        setMessage({text: e.message, ok: false});
       }
     }
     fetchBlogs()
@@ -32,27 +26,55 @@ function App() {
   useEffect( () => {const getUser = async () => {
       try {
         const user = window.localStorage.getItem('BlogAppUser');
-        setUser(JSON.parse(user));
+        const parsedUser = JSON.parse(user);
+        setUser(parsedUser);
+        setMessage({text: `Logged in as ${parsedUser.username}`, ok: true})
       } catch (e) {
-        showMessage({text: e.message, ok: false});
+        setMessage({text: 'Login to Continue', ok: false});
       }
     }
     getUser();
   }, [])
   
   const addToBlogs = (blog) => {
-    console.log("Blogs before adding one", blogs)
     setBlogs(blogs.concat(blog));
-    console.log("Blogs after adding one: ", blogs.concat(blog))
+  }
+
+  const handleDelete = async (blog) => {
+    if ((window.confirm(`Delete blog ${blog.title} by ${blog.author}`))) {
+      try {
+        await blogService.del(blog.id, user.token);
+        setBlogs(blogs.filter(b => b.id !== blog.id));
+        setMessage({text: `Successfully deleted blog ${blog.title}`})
+      } catch (e) {
+        setMessage({text: e.message, ok: false})
+      }
+    }
   }
 
   return (
     <>
       <h1>BlogList Application</h1>
-      {message.text && <Notification message={message}/>}
-      {user ? <Profile user={user} setUser={setUser} /> : <LoginForm action='/api/login' setUser={setUser} showMessage={showMessage} />}
-      {user && <BlogForm action='/api/blogs' showMessage={showMessage} user={user} addToBlogs={addToBlogs}/>}      
-      {user && <Blogs blogs={blogs} />}
+      {message && <Notification message={message} onClose={() => setMessage(null)}/>}
+      {user 
+      ? <Profile user={user} setUser={setUser} setMessage={setMessage}/> 
+      : <LoginForm action='/api/login' setUser={setUser}
+        setMessage={setMessage} />
+      }
+      {user && blogFormVisible 
+      &&<BlogForm action='/api/blogs' 
+          setMessage={setMessage} user={user} 
+          addToBlogs={addToBlogs} 
+          setBlogFormVisible={setBlogFormVisible}
+        /> 
+      }      
+      {user 
+      &&<Blogs blogs={blogs} 
+          blogFormVisible={blogFormVisible}
+          user={user} setBlogFormVisible={setBlogFormVisible}
+          setMessage={setMessage} handleDelete={handleDelete}
+        />
+      }
     </>
   )
 }

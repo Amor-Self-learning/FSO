@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import loginService from '../services/login';
 
-const LoginForm = ({action, setUser, showMessage}) => {
+const LoginForm = ({action, setUser, setMessage}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,9 +9,9 @@ const LoginForm = ({action, setUser, showMessage}) => {
     try {
       const user = await loginService.login(action, username, password)
       setUser(user);
-      showMessage({ text: `Succesfully logged in as ${user.username}`, ok: true})
+      setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true})
     } catch (e) {
-      showMessage({text: e.message, ok: false});
+      setMessage({text: e.message, ok: false});
     }
   }
   return (

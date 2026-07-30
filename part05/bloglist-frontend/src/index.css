@@ -1,7 +1,11 @@
+body {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: whitesmoke;
+}
 #root {
   width: calc(100px + 30vw);
   margin: 1rem auto;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.15);
   padding: 1rem;
   border-radius: 1rem;
   font-family: 'Outfit';
@@ -62,7 +66,7 @@ button:hover {
   padding: 0.5rem;
   width: 90%;
   margin: 0 auto;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.15);
   border-radius: 0.5rem;
 }
 .message.success {
@@ -70,4 +74,20 @@ button:hover {
 }
 .message.error {
   border: 2px solid orangered;
+}
+.small-btn {
+  font-size: 0.7rem;
+  padding: 0.05rem 0.2rem;
+  min-width: 36px;
+  border-radius: 0.3rem;
+}
+
+a {
+  color: rgb(67, 67, 231);
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+}
+a:hover {
+  background-color: rgb(252, 218, 205);
+  border-radius: 0.2rem;
 }
