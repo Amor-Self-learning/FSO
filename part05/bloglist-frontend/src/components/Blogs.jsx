@@ -2,9 +2,9 @@ import Blog from './Blog';
 
 const Blogs = ({
   blogs,
-  blogFormVisible, 
+  blogFormVisible,
   setBlogFormVisible,
-  setMessage, 
+  setMessage,
   user,
   handleDelete
 }) => {
@@ -14,14 +14,14 @@ const Blogs = ({
       {!blogFormVisible && <button onClick={() => setBlogFormVisible(true)}>Create new blog</button>}
       <ol className="blog-list">
         {blogs.sort((a, b) =>
-          b.likes - a.likes).map(blog => 
-          <Blog key={blog.id} blog={blog} user={user} 
+          b.likes - a.likes).map(blog =>
+          <Blog key={blog.id} blog={blog} user={user}
             setMessage={setMessage} handleDelete={() => handleDelete(blog)}
           />
         )}
       </ol>
     </div>
-  )
-}
+  );
+};
 
 export default Blogs;

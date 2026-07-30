@@ -6,9 +6,9 @@ const Notification = ({ message, onClose }) => {
       onClose();
     }, 5000);
 
-    return () => clearTimeout(timer); 
-  }, [message, onClose])
-  return <div className={`message ${message.ok ? "success" : "error"}`}>{message.text}</div>;
+    return () => clearTimeout(timer);
+  }, [message, onClose]);
+  return <div className={`message ${message.ok ? 'success' : 'error'}`}>{message.text}</div>;
 };
 
 export default Notification;

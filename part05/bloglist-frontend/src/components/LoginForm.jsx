@@ -1,27 +1,27 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import loginService from '../services/login';
 
-const LoginForm = ({action, setUser, setMessage}) => {
+const LoginForm = ({ action, setUser, setMessage }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
-      const user = await loginService.login(action, username, password)
+      const user = await loginService.login(action, username, password);
       setUser(user);
-      setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true})
+      setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true });
     } catch (e) {
-      setMessage({text: e.message, ok: false});
+      setMessage({ text: e.message, ok: false });
     }
-  }
+  };
   return (
     <form>
       <div className="input-div">
         <label htmlFor="username">Username: </label>
-        <input 
-          type="text" 
-          id="username" 
-          name="username" 
+        <input
+          type="text"
+          id="username"
+          name="username"
           placeholder="zephyr"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -29,10 +29,10 @@ const LoginForm = ({action, setUser, setMessage}) => {
       </div>
       <div className="input-div">
         <label htmlFor="password">Password: </label>
-        <input 
-          type="password" 
+        <input
+          type="password"
           id="password"
-          name="password" 
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required/>
@@ -40,7 +40,7 @@ const LoginForm = ({action, setUser, setMessage}) => {
       <button type="reset">Reset</button>
       <button type="button" onClick={handleLogin}>Login</button>
     </form>
-  )
-}
+  );
+};
 
 export default LoginForm;
