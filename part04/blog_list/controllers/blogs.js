@@ -36,9 +36,9 @@ blogsRouter.delete('/:id', middleware.tokenExtractor, middleware.userExtractor, 
   }
 })
 
-blogsRouter.put('/:id', middleware.tokenExtractor, middleware.userExtractor, async(req, res) => {
+blogsRouter.put('/:id', async(req, res) => {
   if (!req.body.url || !req.body.title) return res.status(400).send("Blog must have a title and a url");
-  const user = req.user;
+  const user = req.body.user;
   if (!user) {
     return res.status(400).json({error: 'UserId is missing or invalid'})
   }
@@ -49,7 +49,7 @@ blogsRouter.put('/:id', middleware.tokenExtractor, middleware.userExtractor, asy
   blog.author = author;
   blog.url = url;
   blog.likes = likes;
-
+  blog.user = user
   const updatedBlog = await blog.save();
   res.json(updatedBlog);
 });
