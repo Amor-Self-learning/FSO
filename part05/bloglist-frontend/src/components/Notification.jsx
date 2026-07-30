@@ -1,5 +1,5 @@
 const Notification = ({message}) => {
-  <div className="message">{message}</div>
+  return <div className={`message ${message.ok ? "success" : "error"}`}>{message.text}</div>
 }
 
 export default Notification;

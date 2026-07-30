@@ -9,8 +9,9 @@ const LoginForm = ({action, setUser, showMessage}) => {
     try {
       const user = await loginService.login(action, username, password)
       setUser(user);
+      showMessage({ text: `Succesfully logged in as ${user.username}`, ok: true})
     } catch (e) {
-      showMessage(e.message);
+      showMessage({text: e.message, ok: false});
     }
   }
   return (
@@ -22,6 +23,7 @@ const LoginForm = ({action, setUser, showMessage}) => {
           id="username" 
           name="username" 
           placeholder="zephyr"
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
           required/>
       </div>
@@ -31,6 +33,7 @@ const LoginForm = ({action, setUser, showMessage}) => {
           type="password" 
           id="password"
           name="password" 
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           required/>
       </div>
