@@ -45,16 +45,12 @@ blogsRouter.put('/:id', middleware.tokenExtractor, middleware.userExtractor, asy
   const {title, author, url, likes} = req.body;
   const blog = await Blog.findById(req.params.id);
   if (!blog) return res.status(404).end();
-  if(blog.user.toString() === user.id) {
-    blog.title = title;
-    blog.author = author;
-    blog.url = url;
-    blog.likes = likes;
+  blog.title = title;
+  blog.author = author;
+  blog.url = url;
+  blog.likes = likes;
 
   const updatedBlog = await blog.save();
   res.json(updatedBlog);
-  } else {
-    res.status(401).json({error: 'You are not authorized to update this blog.'})
-  }
-})
+});
 module.exports = blogsRouter;
