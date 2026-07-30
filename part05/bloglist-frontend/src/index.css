@@ -1,0 +1,53 @@
+#root {
+  width: calc(100px + 30vw);
+  margin: 1rem auto;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+  border-radius: 1rem;
+  font-family: 'Outfit';
+}
+
+ol, ul {
+  overflow-wrap: normal;
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font: inherit;
+  border: 2px solid rgb(253, 169, 138);
+}
+input:focus {
+  outline: none;
+  border: 2px solid rgb(247, 96, 42);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  padding: 0.4rem;
+  font: inherit;
+  border-radius: 0.5rem;
+  background-color: inherit;
+  outline: none;
+  border: 2px solid rgb(253, 169, 138);
+  background-color: rgb(253, 169, 138);
+}
+button:hover {
+  cursor: pointer;
+  border: 2px solid rgb(247, 96, 42);
+}
