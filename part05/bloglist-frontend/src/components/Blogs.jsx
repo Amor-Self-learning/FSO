@@ -6,7 +6,8 @@ const Blogs = ({
   setBlogFormVisible,
   setMessage,
   user,
-  handleDelete
+  handleDelete,
+  handleLikeClick
 }) => {
   return (
     <div className="blogs">
@@ -17,6 +18,7 @@ const Blogs = ({
           b.likes - a.likes).map(blog =>
           <Blog key={blog.id} blog={blog} user={user}
             setMessage={setMessage} handleDelete={() => handleDelete(blog)}
+            handleLikeClick={(() => handleLikeClick(blog))}
           />
         )}
       </ol>

@@ -25,4 +25,14 @@ const del = async (blogId, token) => {
   });
   return res.data;
 };
-export default { getAll, like, del };
+
+const add = async (blog, token) => {
+  const res = await axios.post('/api/blogs', blog, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return res.data;
+};
+
+export default { getAll, like, del, add };

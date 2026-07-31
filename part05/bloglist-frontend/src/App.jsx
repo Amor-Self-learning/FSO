@@ -39,8 +39,12 @@ function App() {
     getUser();
   }, []);
 
-  const addToBlogs = (blog) => {
-    setBlogs(blogs.concat(blog));
+  const addToBlogs = async (blog) => {
+    if (!user || !user.token) return;
+    const data = await blogService.add(blog, user.token);
+    setBlogs(blogs.concat({ ...data, user : { id: data.user, username : user.username, name : user.name } }));
+    setMessage({ text: `Added a new blog ${blog.title} by ${blog.author}`, ok: true });
+    setBlogFormVisible(false);
   };
 
   const handleDelete = async (blog) => {
@@ -55,6 +59,17 @@ function App() {
     }
   };
 
+  const handleLikeClick = async (blog) => {
+    try {
+      await blogService.like(blog);
+      const newBlog = { ...blog, likes: blog.likes + 1 };
+      const filteredBlogs = blogs.filter(b => b.id !== blog.id);
+      setBlogs(filteredBlogs.concat(newBlog));
+      setMessage({ text: `${user.name} liked ${blog.title}`, ok : true });
+    } catch (e) {
+      setMessage({ text: e.message, ok: false });
+    };
+  };
   return (
     <>
       <h1>BlogList Application</h1>
@@ -73,6 +88,7 @@ function App() {
       }
       {user
         &&<Blogs blogs={blogs}
+          handleLikeClick={handleLikeClick}
           blogFormVisible={blogFormVisible}
           user={user} setBlogFormVisible={setBlogFormVisible}
           setMessage={setMessage} handleDelete={handleDelete}

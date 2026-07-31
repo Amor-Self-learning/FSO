@@ -1,26 +1,16 @@
-import axios from 'axios';
 import { useState } from 'react';
 
-const BlogForm = ({ action, user, addToBlogs, setMessage, setBlogFormVisible }) => {
+const BlogForm = ({ action, addToBlogs, setBlogFormVisible }) => {
 
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
 
   const addBlog = async () => {
-    if (!user || !user.token) return;
-    const newBlog = { title, author, url };
-    const res = await axios.post(action, newBlog, {
-      headers: {
-        Authorization: `Bearer ${user.token}`
-      }
-    });
-    addToBlogs({ ...res.data, user : { id: res.data.user, username : user.username, name : user.name } });
-    setMessage({ text: `Added a new blog ${title} by ${author}`, ok: true });
+    await addToBlogs({ title, author, url });
     setTitle('');
     setAuthor('');
     setUrl('');
-    setBlogFormVisible(false);
   };
   return (
     <form action={action}>
