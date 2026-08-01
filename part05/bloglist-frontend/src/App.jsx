@@ -54,7 +54,8 @@ function App() {
         setBlogs(blogs.filter(b => b.id !== blog.id));
         setMessage({ text: `Successfully deleted blog ${blog.title}` });
       } catch (e) {
-        setMessage({ text: e.message, ok: false });
+        setMessage({ text: 'Failed to delete blog', ok: false });
+        console.error(e);
       };
     }
   };

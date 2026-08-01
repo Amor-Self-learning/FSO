@@ -91,3 +91,8 @@ a:hover {
   background-color: rgb(252, 218, 205);
   border-radius: 0.2rem;
 }
+
+input {
+  background-color: inherit;
+  color: inherit;
+}

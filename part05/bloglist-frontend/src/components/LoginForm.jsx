@@ -11,7 +11,8 @@ const LoginForm = ({ action, setUser, setMessage }) => {
       setUser(user);
       setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true });
     } catch (e) {
-      setMessage({ text: e.message, ok: false });
+      setMessage({ text: 'Invalid username or password', ok: false });
+      console.error(e);
     }
   };
   return (

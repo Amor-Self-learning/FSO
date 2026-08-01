@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ToggleButton from './ToggleButton';
 
-const Blog = ({ blog, handleLikeClick, handleDelete }) => {
+const Blog = ({ username, blog, handleLikeClick, handleDelete }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ const Blog = ({ blog, handleLikeClick, handleDelete }) => {
       {show && <li><b>URL: </b><a href={blog.url}>{blog.url}</a></li>}
       {show && <li><b>Likes: </b>{blog.likes} <button className='small-btn' onClick={handleLikeClick}>Like</button></li>}
       {show && <li><b>Added By: </b>{blog.user.name}</li>}
-      {show && <button className='small-btn' onClick={handleDelete}>Delete</button>}
+      {show && username === blog.user.username && <button className='small-btn' onClick={handleDelete}>Delete</button>}
     </ul>
   );
 };
