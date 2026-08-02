@@ -67,9 +67,9 @@ describe('Blog App', () => {
       helper.loginWith('haris_baig', 'Haris@CS', page);
       await expect(page.getByText('Succesfully logged in as haris_baig')).toBeVisible();
       await page.getByRole('link', { name: /Next JS By Abdul Samad/i }).click();
-      await expect(page.locator('li').filter({ hasText: /title/i }).filter({ hasText: /Next JS/ })).toBeVisible();
+      await expect(page.locator('h6').filter({ hasText: /Next JS/ })).toBeVisible();
       await page.getByRole('button', { name: /like/i }).click();
-      await expect(page.locator('li').filter({ hasText: /likes/i}).filter({hasText: /1/})).toBeVisible();
+      await expect(page.locator('p').filter({hasText: /1 like/i})).toBeVisible();
     });
 
     test('A blog added by the user can be deleted', async ({page}) => {
@@ -85,8 +85,7 @@ describe('Blog App', () => {
       await page.getByRole('link', { name: /Next JS By Abdul Samad/i }).click();
       await page.getByRole('button', { name: /delete/i }).click();
       await expect(page.getByText(/Successfully deleted blog Next JS/i)).toBeVisible();
-      await expect(page.locator('li').filter({ hasText: /title/i }).filter({ hasText: /Next JS/ })).not.toBeVisible();
-      await expect(page.locator('li').filter({ hasText: /author/i }).filter({ hasText: /Abdul Samad/ })).not.toBeVisible();
+      await expect(page.getByRole('link', { name: /Next JS By Abdul Samad/i })).not.toBeVisible();
     });
 
   //   test('Blogs are sorted by number of likes high to low', async ({page, request}) => {
