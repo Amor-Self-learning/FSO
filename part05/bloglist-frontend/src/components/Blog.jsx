@@ -12,7 +12,7 @@ const Blog = ({ user, blog, handleLikeClick, handleDelete }) => {
       </li>
       <li><b>Added By: </b>{blog.user.name}</li>
       {user?.username === blog.user.username
-        && <button className='small-btn' onClick={handleDelete}>Delete</button>}
+        && <button className='small-btn' onClick={() => handleDelete(blog)}>Delete</button>}
     </ul>
   );
 };

@@ -14,7 +14,6 @@ function App() {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
-  const [blogFormVisible, setBlogFormVisible] = useState(false);
   const navigate = useNavigate();
   const match = useMatch('/blogs/:id');
   const blog = match
@@ -54,7 +53,6 @@ function App() {
     const data = await blogService.add(blog, user.token);
     setBlogs(blogs.concat({ ...data, user : { id: data.user, username : user.username, name : user.name } }));
     setMessage({ text: `Added a new blog ${blog.title} by ${blog.author}`, ok: true });
-    setBlogFormVisible(false);
     navigate('/');
   };
 
@@ -103,15 +101,13 @@ function App() {
       {user && <Profile user={user} setUser={setUser} setMessage={setMessage}/>}
       <Routes>
         <Route path='/blogs/:id' element={
-          <Blog username={user?.username} blog={blog}
+          <Blog user={user} blog={blog}
             handleLikeClick={handleLikeClick} handleDelete={handleDelete}
           />
         } />
         <Route path='/' element={
           <Blogs blogs={blogs}
-            handleLikeClick={handleLikeClick}
-            blogFormVisible={blogFormVisible}
-            user={user} setBlogFormVisible={setBlogFormVisible}
+            handleLikeClick={handleLikeClick} user={user}
             setMessage={setMessage} handleDelete={handleDelete}
           />
         } />
@@ -123,7 +119,7 @@ function App() {
           <BlogForm action='/api/blogs'
             setMessage={setMessage} user={user}
             addToBlogs={addToBlogs}
-            setBlogFormVisible={setBlogFormVisible}
+            navigate={navigate}
           />
         } />
       </Routes>

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-const BlogForm = ({ action, addToBlogs, setBlogFormVisible }) => {
-
+const BlogForm = ({ action, addToBlogs, navigate }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -11,6 +10,7 @@ const BlogForm = ({ action, addToBlogs, setBlogFormVisible }) => {
     setTitle('');
     setAuthor('');
     setUrl('');
+    navigate('/');
   };
   return (
     <form action={action}>
@@ -45,7 +45,7 @@ const BlogForm = ({ action, addToBlogs, setBlogFormVisible }) => {
           required/>
       </div>
       <button onClick={addBlog} type='button'>Create</button>
-      <button onClick={() => setBlogFormVisible(false)}>Cancel</button>
+      <button onClick={() => navigate('/')}>Cancel</button>
     </form>
   );
 };
