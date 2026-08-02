@@ -1,25 +1,15 @@
-import Blog from './Blog';
+import { Link } from 'react-router-dom';
 
 const Blogs = ({
-  blogs,
-  blogFormVisible,
-  setBlogFormVisible,
-  setMessage,
-  user,
-  handleDelete,
-  handleLikeClick
+  blogs
 }) => {
   return (
     <div className="blogs">
       <h2>Blogs</h2>
-      {!blogFormVisible && <button onClick={() => setBlogFormVisible(true)}>Create new blog</button>}
       <ol className="blog-list">
         {blogs.sort((a, b) =>
           b.likes - a.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} username={user.username}
-            setMessage={setMessage} handleDelete={() => handleDelete(blog)}
-            handleLikeClick={(() => handleLikeClick(blog))}
-          />
+          <li key={blog.id}><Link to={`/blogs/${blog.id}`}>{`${blog.title} by ${blog.author}`}</Link></li>
         )}
       </ol>
     </div>

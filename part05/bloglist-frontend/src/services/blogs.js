@@ -4,7 +4,8 @@ const getAll = async () => {
   return res.data;
 };
 
-const like = async (blog) => {
+const like = async (blog, loggedInUser) => {
+  if (!loggedInUser) throw new Error ('Login to like this blog');
   const { title, author, url, likes, user } = blog;
   const updatedBlog = {
     title,

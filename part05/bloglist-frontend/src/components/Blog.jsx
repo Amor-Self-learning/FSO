@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import ToggleButton from './ToggleButton';
+const Blog = ({ user, blog, handleLikeClick, handleDelete }) => {
 
-const Blog = ({ username, blog, handleLikeClick, handleDelete }) => {
-  const [show, setShow] = useState(false);
-
+  if (!blog) return null;
   return (
     <ul className='blog'>
-      <li><b>Title: </b>{blog.title} <ToggleButton options={['Hide', 'View']} value={show} setValue={setShow}/></li>
+      <li><b>Title: </b>{blog.title} </li>
       <li><b>Author: </b>{blog.author}</li>
-      {show && <li><b>URL: </b><a href={blog.url}>{blog.url}</a></li>}
-      {show && <li><b>Likes: </b>{blog.likes} <button className='small-btn' onClick={handleLikeClick}>Like</button></li>}
-      {show && <li><b>Added By: </b>{blog.user.name}</li>}
-      {show && username === blog.user.username && <button className='small-btn' onClick={handleDelete}>Delete</button>}
+      <li><b>URL: </b><a href={blog.url}>{blog.url}</a></li>
+      <li><b>Likes: </b>{blog.likes}
+        {user && <button className='small-btn'
+          onClick={() => handleLikeClick(blog)}>Like</button>}
+      </li>
+      <li><b>Added By: </b>{blog.user.name}</li>
+      {user?.username === blog.user.username
+        && <button className='small-btn' onClick={handleDelete}>Delete</button>}
     </ul>
   );
 };

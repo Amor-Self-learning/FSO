@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import loginService from '../services/login';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ action, setUser, setMessage }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const user = await loginService.login(action, username, password);
       setUser(user);
       setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true });
+      navigate('/');
     } catch (e) {
       setMessage({ text: 'Invalid username or password', ok: false });
       console.error(e);
