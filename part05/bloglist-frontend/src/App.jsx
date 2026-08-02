@@ -7,7 +7,7 @@ import blogService from './services/blogs';
 import BlogForm from './components/BlogForm';
 import Blog from './components/Blog';
 import loginService from './services/login';
-
+import { AppBar, Container, Toolbar, Button, Typography } from '@mui/material';
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom';
 
 function App() {
@@ -89,15 +89,19 @@ function App() {
     navigate('/');
   };
   return (
-    <>
-      <h1>BlogList Application</h1>
+    <Container>
+      <AppBar position='static' color='info' sx={{ borderRadius: 3 }}>
+        <Toolbar>
+          <Typography variant="h4" sx={{ flexGrow: 1, fontWeight: 700 }}>
+            Blog App
+          </Typography>
+          <Button color='inherit' component={Link} to="/">Blogs</Button>
+          {!user ? <Button component={Link} to="/login" color='inherit'>Login</Button>
+            : <Button className='small-btn' color='inherit' onClick={() => handleLogout(user, setUser, setMessage)}>Logout</Button> }
+          <Button component={Link} color='inherit' to="/create">New Blog</Button>
+        </Toolbar>
+      </AppBar>
       {message && <Notification message={message} onClose={() => setMessage(null)}/>}
-      <nav>
-        <Link to="/">Blogs</Link>
-        {!user ? <Link to="/login">Login</Link>
-          : <button className='small-btn' onClick={() => handleLogout(user, setUser, setMessage)}>Logout</button> }
-        <Link to="/create">New Blog</Link>
-      </nav>
       {user && <Profile user={user} setUser={setUser} setMessage={setMessage}/>}
       <Routes>
         <Route path='/blogs/:id' element={
@@ -123,7 +127,7 @@ function App() {
           />
         } />
       </Routes>
-    </>
+    </Container>
   );
 }
 

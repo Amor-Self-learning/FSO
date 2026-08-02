@@ -1,3 +1,4 @@
+import { Alert } from '@mui/material';
 import { useEffect } from 'react';
 
 const Notification = ({ message, onClose }) => {
@@ -8,7 +9,7 @@ const Notification = ({ message, onClose }) => {
 
     return () => clearTimeout(timer);
   }, [message, onClose]);
-  return <div className={`message ${message.ok ? 'success' : 'error'}`}>{message.text}</div>;
+  return <Alert sx={{ borderRadius: 3 }} severity={message.ok ? 'success' : 'error'}>{message.text}</Alert>;
 };
 
 export default Notification;

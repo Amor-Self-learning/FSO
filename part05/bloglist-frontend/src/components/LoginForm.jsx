@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import loginService from '../services/login';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Box } from '@mui/material';
 
 const LoginForm = ({ action, setUser, setMessage }) => {
   const [username, setUsername] = useState('');
@@ -19,31 +20,32 @@ const LoginForm = ({ action, setUser, setMessage }) => {
     }
   };
   return (
-    <form>
-      <div className="input-div">
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="zephyr"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required/>
-      </div>
-      <div className="input-div">
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required/>
-      </div>
-      <button type="reset">Reset</button>
-      <button type="button" onClick={handleLogin}>Login</button>
-    </form>
+    <Box component="form"
+      sx={{ display: 'flex', flexDirection: 'column', maxWidth: '400px', margin: '4rem auto', gap: '1rem' }}>
+      <TextField
+        type="text"
+        label='username'
+        id="username"
+        name="username"
+        placeholder="zephyr"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        required
+        variant='standard'
+      />
+      <TextField
+        label='Password'
+        type="password"
+        id="password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        variant='standard'
+      />
+      <Button type="reset" color='warning' variant='outlined'>Reset</Button>
+      <Button type="button" onClick={handleLogin} color='success' variant='contained'>Login</Button>
+    </Box>
   );
 };
 

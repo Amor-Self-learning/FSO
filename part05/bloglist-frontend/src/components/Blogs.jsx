@@ -1,18 +1,19 @@
+import { Button, ListItem, List, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Blogs = ({
   blogs
 }) => {
   return (
-    <div className="blogs">
-      <h2>Blogs</h2>
-      <ol className="blog-list">
+    <Box className="blogs" sx={{ m: 2 }}>
+      <Typography variant='h5' sx={{ fontWeight: 500 }}>Blogs</Typography>
+      <List className="blog-list">
         {blogs.sort((a, b) =>
           b.likes - a.likes).map(blog =>
-          <li key={blog.id}><Link to={`/blogs/${blog.id}`}>{`${blog.title} by ${blog.author}`}</Link></li>
+          <ListItem key={blog.id}><Button variant='text' component={Link} to={`/blogs/${blog.id}`}>{`${blog.title} by ${blog.author}`}</Button></ListItem>
         )}
-      </ol>
-    </div>
+      </List>
+    </Box>
   );
 };
 
