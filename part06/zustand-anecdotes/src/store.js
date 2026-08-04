@@ -1,4 +1,4 @@
-import anecdoteService from '../services/anecdotes';
+import anecdoteService from './services/anecdotes';
 
 import { create } from 'zustand';
 const asObject = anecdote => ({
@@ -43,7 +43,8 @@ export const useAnecdotes = () => {
   const anecdotes = useAnecdoteStore(state => state.anecdotes);
   const filter = useAnecdoteStore(state => state.filter);
   return (filter && filter.trim().length > 0) 
-    ? anecdotes.filter(a => a.content.toLowerCase().includes(filter.toLowerCase()))
-    : anecdotes;
+    ? anecdotes.toSorted((a, b) => b.votes - a.votes).filter(a => a.content.toLowerCase().includes(filter.toLowerCase()))
+    : anecdotes.toSorted((a, b) => b.votes - a.votes);
 }
 export const useAnecdoteActions = () => useAnecdoteStore((state) => state.actions)
+export default useAnecdoteStore;
