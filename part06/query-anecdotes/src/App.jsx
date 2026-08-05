@@ -1,14 +1,16 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { useAnecdotes } from './hooks/useAnecdotes';
+import useNotify from './hooks/useNotify';
 
 
 const App = () => {
-
+  const { notify } = useNotify();
   const { isPending, isError, anecdotes, voteMutation } = useAnecdotes();
 
   const handleVote = (anecdote) => {
     voteMutation.mutate({...anecdote, votes: anecdote.votes + 1})
+    notify({ message: `Anecdote '${anecdote.content}' voted`, ok: true})
   }
 
   if (isPending) return <div>Loading Data...</div>

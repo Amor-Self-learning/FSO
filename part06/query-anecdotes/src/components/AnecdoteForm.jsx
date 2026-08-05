@@ -7,7 +7,6 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     newNoteMutations.mutate(content)
     event.target.reset()
-    console.log('new anecdote')
   }
 
   return (
