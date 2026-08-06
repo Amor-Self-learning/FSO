@@ -12,18 +12,23 @@ import useNotificationStore from './stores/notificationStore';
 import { useBlogActions, useBlogData } from './stores/blogsStore';
 import useUserStore from './stores/loggedUserStore';
 import { getStoredUser } from './services/persistentUser';
+import { useUsers, useUserActions } from './stores/usersStore';
+import Users from './components/Users';
 
 function App() {
   const { blogs, isLoading } = useBlogData();
   const { initialize, addToBlog, deleteBlog, likeBlog } = useBlogActions();
   const { user, setUser } = useUserStore();
+  const users = useUsers();
+  const { initialize: initializeUsers } = useUserActions();
   const { message, setMessage } = useNotificationStore();
   const navigate = useNavigate();
   const match = useMatch('/blogs/:id');
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
   useEffect(() => {
     initialize();
-  }, [initialize]);
+    initializeUsers();
+  }, [initialize, initializeUsers]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -106,6 +111,9 @@ function App() {
           <Button component={Link} color="inherit" to="/create">
             New Blog
           </Button>
+          <Button component={Link} color="inherit" to="/users">
+            Users
+          </Button>
         </Toolbar>
       </AppBar>
       {message && (
@@ -161,6 +169,7 @@ function App() {
             />
           }
         />
+        <Route path="/users" element={<Users users={users} />} />
       </Routes>
     </Container>
   );
