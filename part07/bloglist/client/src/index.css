@@ -1,0 +1,98 @@
+body {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: whitesmoke;
+}
+#root {
+  width: calc(100px + 30vw);
+  margin: 1rem auto;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.15);
+  padding: 1rem;
+  border-radius: 1rem;
+  font-family: 'Outfit';
+}
+
+ol, ul {
+  overflow-wrap: normal;
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font: inherit;
+  border: 2px solid rgb(253, 169, 138);
+}
+input:focus {
+  outline: none;
+  border: 2px solid rgb(247, 96, 42);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-div {
+  display: flex;
+  justify-content:space-between;
+}
+
+form {
+  width: 70%;
+  margin: 0.5rem auto;
+}
+button {
+  padding: 0.4rem;
+  font: inherit;
+  border-radius: 0.5rem;
+  background-color: inherit;
+  outline: none;
+  border: 2px solid rgb(253, 169, 138);
+  background-color: rgb(253, 169, 138);
+  min-width:100px;
+  margin: 0 auto;
+}
+button:hover {
+  cursor: pointer;
+  border: 2px solid rgb(247, 96, 42);
+}
+
+.message {
+  padding: 0.5rem;
+  width: 90%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+}
+.message.success {
+  border: 2px solid green;
+}
+.message.error {
+  border: 2px solid orangered;
+}
+.small-btn {
+  font-size: 0.7rem;
+  padding: 0.05rem 0.2rem;
+  min-width: 36px;
+  border-radius: 0.3rem;
+}
+
+a {
+  color: rgb(67, 67, 231);
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+}
+a:hover {
+  background-color: rgb(252, 218, 205);
+  border-radius: 0.2rem;
+}
+
+input {
+  background-color: inherit;
+  color: inherit;
+}
