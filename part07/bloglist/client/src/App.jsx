@@ -14,6 +14,7 @@ import useUserStore from './stores/loggedUserStore';
 import { getStoredUser } from './services/persistentUser';
 import { useUsers, useUserActions } from './stores/usersStore';
 import Users from './components/Users';
+import User from './components/User';
 
 function App() {
   const { blogs, isLoading } = useBlogData();
@@ -23,8 +24,14 @@ function App() {
   const { initialize: initializeUsers } = useUserActions();
   const { message, setMessage } = useNotificationStore();
   const navigate = useNavigate();
-  const match = useMatch('/blogs/:id');
-  const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
+  const blogMatch = useMatch('/blogs/:id');
+  const userMatch = useMatch('/users/:id');
+  const blog = blogMatch
+    ? blogs.find((blog) => blog.id === blogMatch.params.id)
+    : null;
+  const invdividualUser = userMatch
+    ? users.find((user) => user.id === userMatch.params.id)
+    : null;
   useEffect(() => {
     initialize();
     initializeUsers();
@@ -134,6 +141,7 @@ function App() {
             />
           }
         />
+        <Route path="/users/:id" element={<User user={invdividualUser} />} />
         <Route
           path="/"
           element={
