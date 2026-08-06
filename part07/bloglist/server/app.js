@@ -13,9 +13,9 @@ const app = express();
 mongoose
   .connect(config.MONGODB_URI)
   .then(() => {
-    logger.info('Connected to MongoDB')
+    logger.info('Connected to MongoDB');
   })
-  .catch(error => {
+  .catch((error) => {
     logger.error('Error connection to MongoDB:', error.message);
   });
 
@@ -27,12 +27,12 @@ app.use('/api/login', loginRouter);
 
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing');
-  app.use('/api/testing', testingRouter)
-}else if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')))
+  app.use('/api/testing', testingRouter);
+} else if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
   app.get('/*splat', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'))
-  })
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  });
 }
 
 app.use(middleware.unknownEndpoint);

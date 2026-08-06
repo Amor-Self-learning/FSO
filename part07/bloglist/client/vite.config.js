@@ -9,12 +9,12 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true,
-      }
-    }
+      },
+    },
   },
-  test : {
+  test: {
     environment: 'jsdom',
-    globals : true,
-    setupFiles : './testSetup.js'
-  }
+    globals: true,
+    setupFiles: './testSetup.js',
+  },
 });

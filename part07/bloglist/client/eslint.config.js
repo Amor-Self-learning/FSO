@@ -3,6 +3,7 @@ import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig([
   globalIgnores(['dist', 'node_modules']),
@@ -20,16 +21,13 @@ export default defineConfig([
       },
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
-    rules : {
-      indent: ['error', 2],
-      'linebreak-style': ['error', 'unix'],
-      quotes: ['error', 'single'],
-      semi: ['error', 'always'],
+    rules: {
+      // Code quality rules stay here
       eqeqeq: 'error',
-      'no-trailing-spaces': 'error',
-      'object-curly-spacing': ['error', 'always'],
-      'arrow-spacing': ['error', { before: true, after: true }],
-      'no-console': 'off'
+      'no-console': 'off',
+      // Formatting rules (indent, quotes, semi, etc.) have been removed
+      // because Prettier will now handle them automatically.
     },
   },
+  eslintPluginPrettierRecommended,
 ]);

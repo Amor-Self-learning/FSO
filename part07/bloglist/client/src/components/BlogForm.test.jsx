@@ -7,14 +7,21 @@ describe('<BlogForm />', () => {
   const blog = {
     title: 'Go To Statement Considered Harmful',
     author: 'Edsger W. Dijkstra',
-    url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf'
+    url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
   };
 
   it('It calls addToBlogs with write details when new note is created', async () => {
     const mockAddToBlogs = vi.fn();
     const user = userEvent.setup();
 
-    render(<BlogFrom action='' addToBlogs={mockAddToBlogs} setMessage={() => {}} setBlogFormVisible={() => {}}/>);
+    render(
+      <BlogFrom
+        action=""
+        addToBlogs={mockAddToBlogs}
+        setMessage={() => {}}
+        setBlogFormVisible={() => {}}
+      />
+    );
     const title = screen.getByRole('textbox', { name: /title/i });
     const author = screen.getByRole('textbox', { name: /author/i });
     const url = screen.getByRole('textbox', { name: /url/i });

@@ -14,36 +14,49 @@ const BlogForm = ({ action, addToBlogs, navigate }) => {
     navigate('/');
   };
   return (
-    <Box component="form" action={action}
-      sx={{ display: 'flex', flexDirection: 'column', maxWidth: '400px', margin: '4rem auto', gap: '1rem' }}>
+    <Box
+      component="form"
+      action={action}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '400px',
+        margin: '4rem auto',
+        gap: '1rem',
+      }}
+    >
       <TextField
-        label='Title'
-        type='text'
-        name='title'
+        label="Title"
+        type="text"
+        name="title"
         value={title}
-        onChange={e => setTitle(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
         required
       />
       <TextField
-        label='Author'
-        type='text'
-        id='author'
-        name='author'
+        label="Author"
+        type="text"
+        id="author"
+        name="author"
         value={author}
-        onChange={e => setAuthor(e.target.value)}
+        onChange={(e) => setAuthor(e.target.value)}
         required
       />
       <TextField
-        label='URL'
-        type='text'
-        id='url'
-        name='url'
+        label="URL"
+        type="text"
+        id="url"
+        name="url"
         value={url}
-        onChange={e => setUrl(e.target.value)}
+        onChange={(e) => setUrl(e.target.value)}
         required
       />
-      <Button onClick={addBlog} variant='contained' color='success'>Create</Button>
-      <Button onClick={() => navigate('/')} variant='outlined' color='warning'>Cancel</Button>
+      <Button onClick={addBlog} variant="contained" color="success">
+        Create
+      </Button>
+      <Button onClick={() => navigate('/')} variant="outlined" color="warning">
+        Cancel
+      </Button>
     </Box>
   );
 };

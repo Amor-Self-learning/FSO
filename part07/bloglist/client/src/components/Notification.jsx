@@ -9,8 +9,11 @@ const Notification = ({ message, onClose }) => {
 
     return () => clearTimeout(timer);
   }, [message, onClose]);
-  return <Alert sx={{ borderRadius: 3 }} severity={message.ok ? 'success' : 'error'}>{message.text}</Alert>;
+  return (
+    <Alert sx={{ borderRadius: 3 }} severity={message.ok ? 'success' : 'error'}>
+      {message.text}
+    </Alert>
+  );
 };
 
 export default Notification;
-

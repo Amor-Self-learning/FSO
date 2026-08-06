@@ -10,19 +10,19 @@ describe('<Blog />', () => {
     user: {
       id: '6a69f297e9c77d7a6e9bb826',
       username: 'amorzephyr',
-      name: 'Zephyr@CS'
-    }
+      name: 'Zephyr@CS',
+    },
   };
   const users = [
     {
       id: '6a69f297e9c77d7a6e9bb826',
       username: 'amorzephyr',
-      name: 'Abdul Samad'
+      name: 'Abdul Samad',
     },
     {
       id: '6a69f297e9c77d7a6e983826',
       username: 'harisbaig',
-      name: 'Haris Baig'
+      name: 'Haris Baig',
     },
   ];
 
@@ -31,7 +31,7 @@ describe('<Blog />', () => {
     const title = screen.getByText(blog.title);
     const author = screen.getByText(blog.author);
     const url = screen.getByText(blog.url);
-    const likes= screen.getByText(blog.likes);
+    const likes = screen.getByText(blog.likes);
     expect(screen.queryByRole('button', { name: /like/i })).toBeNull();
     expect(screen.queryByRole('button', { name: /delete/i })).toBeNull();
     expect(title).toBeDefined();
@@ -41,7 +41,7 @@ describe('<Blog />', () => {
   });
 
   it('Show only like button to authenticated users who is not the creator of the blog.', () => {
-    render(<Blog blog={blog} user={users[1]}/>);
+    render(<Blog blog={blog} user={users[1]} />);
     expect(screen.getByText(blog.title)).toBeDefined();
     expect(screen.getByText(blog.author)).toBeDefined();
     expect(screen.getByText(blog.url)).toBeDefined();
@@ -50,8 +50,8 @@ describe('<Blog />', () => {
     expect(screen.queryByRole('button', { name: /delete/i })).toBeNull();
   });
 
-  it('Show both like and delete button to authenticated user who is the creator of the blog.', ()  => {
-    render(<Blog blog={blog} user={users[0]}/>);
+  it('Show both like and delete button to authenticated user who is the creator of the blog.', () => {
+    render(<Blog blog={blog} user={users[0]} />);
     expect(screen.getByText(blog.title)).toBeDefined();
     expect(screen.getByText(blog.author)).toBeDefined();
     expect(screen.getByText(blog.url)).toBeDefined();

@@ -12,7 +12,10 @@ const LoginForm = ({ action, setUser, setMessage }) => {
     try {
       const user = await loginService.login(action, username, password);
       setUser(user);
-      setMessage({ text: `Succesfully logged in as ${user.username}`, ok: true });
+      setMessage({
+        text: `Succesfully logged in as ${user.username}`,
+        ok: true,
+      });
       navigate('/');
     } catch (e) {
       setMessage({ text: 'Invalid username or password', ok: false });
@@ -20,31 +23,48 @@ const LoginForm = ({ action, setUser, setMessage }) => {
     }
   };
   return (
-    <Box component="form"
-      sx={{ display: 'flex', flexDirection: 'column', maxWidth: '400px', margin: '4rem auto', gap: '1rem' }}>
+    <Box
+      component="form"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '400px',
+        margin: '4rem auto',
+        gap: '1rem',
+      }}
+    >
       <TextField
         type="text"
-        label='username'
+        label="username"
         id="username"
         name="username"
         placeholder="zephyr"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
-        variant='standard'
+        variant="standard"
       />
       <TextField
-        label='Password'
+        label="Password"
         type="password"
         id="password"
         name="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
-        variant='standard'
+        variant="standard"
       />
-      <Button type="reset" color='warning' variant='outlined'>Reset</Button>
-      <Button type="button" onClick={handleLogin} color='success' variant='contained'>Login</Button>
+      <Button type="reset" color="warning" variant="outlined">
+        Reset
+      </Button>
+      <Button
+        type="button"
+        onClick={handleLogin}
+        color="success"
+        variant="contained"
+      >
+        Login
+      </Button>
     </Box>
   );
 };

@@ -2,26 +2,37 @@ const usersRouter = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-usersRouter.get('/', async(req, res) => {
-  const users = await User.find({}).populate('blogs', {url: 1, title: 1, author: 1, likes: 1});
+usersRouter.get('/', async (req, res) => {
+  const users = await User.find({}).populate('blogs', {
+    url: 1,
+    title: 1,
+    author: 1,
+    likes: 1,
+  });
   res.json(users);
-})
+});
 
-usersRouter.post('/', async(req, res) => {
-  const {username, name, password} = req.body;
+usersRouter.post('/', async (req, res) => {
+  const { username, name, password } = req.body;
   if (!username || username.length < 3) {
-    return res.status(400).json({error: 'Must provide a valid username at least 3 characters long.'})
+    return res.status(400).json({
+      error: 'Must provide a valid username at least 3 characters long.',
+    });
   } else if (!password || password.length < 3) {
-    return res.status(400).json({error: 'Must provide a valid password at least 3 characters long.'})
+    return res.status(400).json({
+      error: 'Must provide a valid password at least 3 characters long.',
+    });
   }
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
-  
+
   const user = new User({
-    username, name, passwordHash
-  })
+    username,
+    name,
+    passwordHash,
+  });
   const savedUser = await user.save();
   res.status(201).json(savedUser);
-})
+});
 
 module.exports = usersRouter;
