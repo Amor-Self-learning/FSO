@@ -1,39 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Blogs from './components/Blogs';
 import LoginForm from './components/LoginForm';
 import Notification from './components/Notification';
 import Profile from './components/Profile';
-import blogService from './services/blogs';
 import BlogForm from './components/BlogForm';
 import Blog from './components/Blog';
 import loginService from './services/login';
 import { AppBar, Container, Toolbar, Button, Typography } from '@mui/material';
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
+import useNotificationStore from './notificationStore';
+import { useBlogActions, useBlogData } from './blogStore';
+import useUserStore from './userStore';
+import { getStoredUser } from './services/persistentUser';
 
 function App() {
-  const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
+  const { blogs, isLoading } = useBlogData();
+  const { initialize, addToBlog, deleteBlog, likeBlog } = useBlogActions();
+  const { user, setUser } = useUserStore();
+  const { message, setMessage } = useNotificationStore();
   const navigate = useNavigate();
   const match = useMatch('/blogs/:id');
   const blog = match ? blogs.find((blog) => blog.id === match.params.id) : null;
   useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const data = await blogService.getAll();
-        setBlogs(data);
-      } catch (e) {
-        setMessage({ text: e.message, ok: false });
-      }
-    };
-    fetchBlogs();
-  }, []);
+    initialize();
+  }, [initialize]);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const user = window.localStorage.getItem('BlogAppUser');
+        const user = getStoredUser();
         if (user) {
           const parsedUser = JSON.parse(user);
           setUser(parsedUser);
@@ -45,17 +40,11 @@ function App() {
       }
     };
     getUser();
-  }, []);
+  }, [setUser, setMessage]);
 
   const addToBlogs = async (blog) => {
     if (!user || !user.token) return;
-    const data = await blogService.add(blog, user.token);
-    setBlogs(
-      blogs.concat({
-        ...data,
-        user: { id: data.user, username: user.username, name: user.name },
-      })
-    );
+    await addToBlog(blog, user.token);
     setMessage({
       text: `Added a new blog ${blog.title} by ${blog.author}`,
       ok: true,
@@ -66,8 +55,7 @@ function App() {
   const handleDelete = async (blog) => {
     if (window.confirm(`Delete blog ${blog.title} by ${blog.author}`)) {
       try {
-        await blogService.del(blog.id, user.token);
-        setBlogs(blogs.filter((b) => b.id !== blog.id));
+        await deleteBlog(blog.id, user.token);
         setMessage({ text: `Successfully deleted blog ${blog.title}` });
         navigate('/');
       } catch (e) {
@@ -79,10 +67,7 @@ function App() {
 
   const handleLikeClick = async (blog) => {
     try {
-      await blogService.like(blog, user);
-      const newBlog = { ...blog, likes: blog.likes + 1 };
-      const filteredBlogs = blogs.filter((b) => b.id !== blog.id);
-      setBlogs(filteredBlogs.concat(newBlog));
+      await likeBlog(blog, user);
       setMessage({ text: `${user.name} liked ${blog.title}`, ok: true });
     } catch (e) {
       setMessage({ text: e.message, ok: false });
@@ -123,62 +108,60 @@ function App() {
           </Button>
         </Toolbar>
       </AppBar>
-      <ErrorBoundary>
-        {message && (
-          <Notification message={message} onClose={() => setMessage(null)} />
-        )}
-        {user && (
-          <Profile user={user} setUser={setUser} setMessage={setMessage} />
-        )}
-        <Routes>
-          <Route
-            path="/blogs/:id"
-            element={
-              <Blog
-                user={user}
-                blog={blog}
-                handleLikeClick={handleLikeClick}
-                handleDelete={handleDelete}
-              />
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <Blogs
-                blogs={blogs}
-                handleLikeClick={handleLikeClick}
-                user={user}
-                setMessage={setMessage}
-                handleDelete={handleDelete}
-              />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <LoginForm
-                action="/api/login"
-                setUser={setUser}
-                setMessage={setMessage}
-              />
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <BlogForm
-                action="/api/blogs"
-                setMessage={setMessage}
-                user={user}
-                addToBlogs={addToBlogs}
-                navigate={navigate}
-              />
-            }
-          />
-          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-        </Routes>
-      </ErrorBoundary>
+      {message && (
+        <Notification message={message} onClose={() => setMessage(null)} />
+      )}
+      {user && (
+        <Profile user={user} setUser={setUser} setMessage={setMessage} />
+      )}
+      <Routes>
+        <Route
+          path="/blogs/:id"
+          element={
+            <Blog
+              user={user}
+              blog={blog}
+              handleLikeClick={handleLikeClick}
+              handleDelete={handleDelete}
+            />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Blogs
+              blogs={blogs}
+              isLoading={isLoading}
+              handleLikeClick={handleLikeClick}
+              user={user}
+              setMessage={setMessage}
+              handleDelete={handleDelete}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <LoginForm
+              action="/api/login"
+              setUser={setUser}
+              setMessage={setMessage}
+            />
+          }
+        />
+        <Route
+          path="/create"
+          element={
+            <BlogForm
+              action="/api/blogs"
+              setMessage={setMessage}
+              user={user}
+              addToBlogs={addToBlogs}
+              navigate={navigate}
+            />
+          }
+        />
+      </Routes>
     </Container>
   );
 }

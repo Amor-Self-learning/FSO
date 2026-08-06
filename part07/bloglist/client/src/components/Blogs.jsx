@@ -1,7 +1,11 @@
 import { Button, ListItem, List, Typography, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Blogs = ({ blogs }) => {
+const Blogs = ({ isLoading, blogs }) => {
+  if (isLoading) {
+    return <div>Loading Blogs...</div>;
+  }
+
   return (
     <Box className="blogs" sx={{ m: 2 }}>
       <Typography variant="h5" sx={{ fontWeight: 500 }}>

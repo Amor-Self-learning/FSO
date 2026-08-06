@@ -1,16 +1,20 @@
-import { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import useField from '../hooks/useField';
 
 const BlogForm = ({ action, addToBlogs, navigate }) => {
-  const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [url, setUrl] = useState('');
+  const title = useField('text', 'Title', 'title');
+  const author = useField('text', 'Author', 'author');
+  const url = useField('text', 'URL', 'url');
 
   const addBlog = async () => {
-    await addToBlogs({ title, author, url });
-    setTitle('');
-    setAuthor('');
-    setUrl('');
+    await addToBlogs({
+      title: title.data.value,
+      author: author.data.value,
+      url: url.data.value,
+    });
+    title.reset();
+    author.reset();
+    url.reset();
     navigate('/');
   };
   return (
@@ -25,32 +29,9 @@ const BlogForm = ({ action, addToBlogs, navigate }) => {
         gap: '1rem',
       }}
     >
-      <TextField
-        label="Title"
-        type="text"
-        name="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <TextField
-        label="Author"
-        type="text"
-        id="author"
-        name="author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-        required
-      />
-      <TextField
-        label="URL"
-        type="text"
-        id="url"
-        name="url"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        required
-      />
+      <TextField required {...title.data} />
+      <TextField required {...author.data} />
+      <TextField required {...url.data} />
       <Button onClick={addBlog} variant="contained" color="success">
         Create
       </Button>

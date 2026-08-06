@@ -1,12 +1,13 @@
 import axios from 'axios';
+import { removeUser, saveUser } from './persistentUser';
 
 const login = async (action, username, password) => {
   const res = await axios.post(action, { username, password });
-  window.localStorage.setItem('BlogAppUser', JSON.stringify(res.data));
+  saveUser(res.data);
   return res.data;
 };
 
 const logout = () => {
-  window.localStorage.removeItem('BlogAppUser');
+  removeUser();
 };
 export default { login, logout };
