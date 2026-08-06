@@ -1,5 +1,5 @@
 import { useShallow } from 'zustand/shallow';
-import blogsService from './services/blogs';
+import blogsService from '../services/blogs';
 import { create } from 'zustand';
 
 const useBlogsStore = create((set) => ({

@@ -8,9 +8,9 @@ import Blog from './components/Blog';
 import loginService from './services/login';
 import { AppBar, Container, Toolbar, Button, Typography } from '@mui/material';
 import { Routes, Route, Link, useNavigate, useMatch } from 'react-router-dom';
-import useNotificationStore from './notificationStore';
-import { useBlogActions, useBlogData } from './blogStore';
-import useUserStore from './userStore';
+import useNotificationStore from './stores/notificationStore';
+import { useBlogActions, useBlogData } from './stores/blogsStore';
+import useUserStore from './stores/loggedUserStore';
 import { getStoredUser } from './services/persistentUser';
 
 function App() {
