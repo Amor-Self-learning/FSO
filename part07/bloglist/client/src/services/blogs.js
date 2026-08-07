@@ -36,4 +36,10 @@ const add = async (blog, token) => {
   return res.data;
 };
 
-export default { getAll, like, del, add };
+const comment = async (comment, blogId, user) => {
+  const com = { comment, user };
+  const res = await axios.post(`/api/blogs/${blogId}`, com);
+  return res.data;
+};
+
+export default { getAll, like, del, add, comment };

@@ -4,7 +4,10 @@ import {
   CardActions,
   Button,
   Typography,
+  List,
+  ListItem,
 } from '@mui/material';
+import CommentForm from './CommentForm';
 
 const Blog = ({ user, blog, handleLikeClick, handleDelete }) => {
   if (!blog) return null;
@@ -52,6 +55,17 @@ const Blog = ({ user, blog, handleLikeClick, handleDelete }) => {
           </Button>
         )}
       </CardActions>
+      <Typography variant="h5" gutterBottom>
+        Comments
+      </Typography>
+      <CommentForm blogId={blog.id} user={user} />
+      <List>
+        {blog.comments && blog.comments.length > 0
+          ? blog.comments.map((comment) => (
+              <ListItem key={comment}>{comment}</ListItem>
+            ))
+          : 'No Comments Yet.'}
+      </List>
     </Card>
   );
 };

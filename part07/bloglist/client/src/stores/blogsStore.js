@@ -12,9 +12,14 @@ const useBlogsStore = create((set) => ({
       isLoading: false,
     }));
   },
-  addToBlog: async (blog, token) => {
-    const newBlog = await blogsService.add(blog, token);
-    newBlog.user = blog.user;
+  addToBlog: async (blog, user) => {
+    const newBlog = await blogsService.add(blog, user.token);
+    newBlog.user = {
+      id: newBlog.user,
+      username: user.username,
+      name: user.name,
+    };
+    console.log(newBlog);
     set((state) => ({
       blogs: state.blogs.concat(newBlog),
     }));
@@ -32,6 +37,14 @@ const useBlogsStore = create((set) => ({
     set((state) => ({
       isLoading: false,
       blogs: state.blogs.map((b) => (b.id !== blog.id ? b : newBlog)),
+    }));
+  },
+  commentBlog: async (comment, blogId, user) => {
+    console.log(comment, blogId, user);
+    const newBlog = await blogsService.comment(comment, blogId, user);
+    set((state) => ({
+      isLoading: false,
+      blogs: state.blogs.map((b) => (b.id !== blogId ? b : newBlog)),
     }));
   },
 }));
@@ -52,5 +65,6 @@ export const useBlogActions = () =>
       addToBlog: state.addToBlog,
       deleteBlog: state.deleteBlog,
       likeBlog: state.likeBlog,
+      commentBlog: state.commentBlog,
     }))
   );

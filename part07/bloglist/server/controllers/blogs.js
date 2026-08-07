@@ -71,4 +71,17 @@ blogsRouter.put('/:id', async (req, res) => {
   const updatedBlog = await blog.save();
   res.json(updatedBlog);
 });
+
+blogsRouter.post('/:id', async (req, res) => {
+  console.log(req.body);
+  if (!req.body.comment || !req.body.user) {
+    return res.status(400).json({ error: 'Comment Body or user missing' });
+  }
+  const { comment } = req.body;
+  const blog = await Blog.findById(req.params.id);
+  blog.comments = blog.comments.concat(comment);
+  blog.save();
+  res.json(blog);
+});
+
 module.exports = blogsRouter;

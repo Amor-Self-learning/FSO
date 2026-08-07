@@ -18,7 +18,8 @@ import User from './components/User';
 
 function App() {
   const { blogs, isLoading } = useBlogData();
-  const { initialize, addToBlog, deleteBlog, likeBlog } = useBlogActions();
+  const { initialize, addToBlog, deleteBlog, likeBlog, commentBlog } =
+    useBlogActions();
   const { user, setUser } = useUserStore();
   const users = useUsers();
   const { initialize: initializeUsers } = useUserActions();
@@ -56,7 +57,7 @@ function App() {
 
   const addToBlogs = async (blog) => {
     if (!user || !user.token) return;
-    await addToBlog(blog, user.token);
+    await addToBlog(blog, user);
     setMessage({
       text: `Added a new blog ${blog.title} by ${blog.author}`,
       ok: true,
@@ -136,6 +137,7 @@ function App() {
             <Blog
               user={user}
               blog={blog}
+              commentBlog={commentBlog}
               handleLikeClick={handleLikeClick}
               handleDelete={handleDelete}
             />
