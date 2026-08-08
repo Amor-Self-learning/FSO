@@ -7,14 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc --noEmit",
     "calculatebmi": "tsc && node bmiCalculator.ts",
-    "calculateExercises": "tsc && node exerciseCalculator.ts"
+    "calculateExercises": "tsc && node exerciseCalculator.ts",
+    "dev": "node --watch index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^26.1.2",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
