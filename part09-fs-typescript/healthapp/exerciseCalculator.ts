@@ -39,22 +39,31 @@ const calclateExercises = (days: number[], target: number): Result => {
     ratingDescription,
     target,
     average
+  };
+};
+
+if (process.argv[1] === import.meta.filename) {
+  if (process.argv.length < 4) {
+    console.error('Invalid number of arguments.');
+    process.exit(1);
+  }
+
+  let target: number;
+  let days: number[];
+
+  try {
+    target = Number(process.argv[2]);
+    days = process.argv.slice(3,).map(day => Number(day));
+    console.log(calclateExercises(days, target));
+  } catch (error : unknown) {
+    console.error(`Something went wrong. `, error instanceof Error ? error.message: '');
+    process.exit(2);
   }
 }
 
-if (process.argv.length < 4) {
-  console.error('Invalid number of arguments.');
-  process.exit(1);
+export interface ExerciseReq {
+  daily_exercises: [string] | [number],
+  target: string | number,
 }
 
-let target: number;
-let days: number[];
-
-try {
-  target = Number(process.argv[2]);
-  days = process.argv.slice(3,).map(day => Number(day));
-  console.log(calclateExercises(days, target));
-} catch (error : unknown) {
-  console.error(`Something went wrong. `, error instanceof Error ? error.message: '');
-  process.exit(2);
-}
+export default calclateExercises;
