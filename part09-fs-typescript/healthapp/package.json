@@ -9,7 +9,8 @@
     "calculatebmi": "tsc && node bmiCalculator.ts",
     "calculateExercises": "tsc && node exerciseCalculator.ts",
     "dev": "node --watch index.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node index.ts"
   },
   "keywords": [],
   "author": "",
