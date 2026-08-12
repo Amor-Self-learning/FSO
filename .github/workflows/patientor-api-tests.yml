@@ -2,7 +2,8 @@ name: Patientor API Tests
 
 on:
   push:
-    branches: [ xmain, xmaster ]
+    paths: 
+      - 'part09-fs-typescript/**'
 
 jobs:
   test:
@@ -18,30 +19,30 @@ jobs:
         node-version: '24'
 
     - name: Install patientor backend dependencies
-      working-directory: ./patientor/backend
+      working-directory: ./part09-fs-typescript/patientor/backend
       run: npm install --legacy-peer-deps
 
     - name: Lint patientor backend
-      working-directory: ./patientor/backend
+      working-directory: ./part09-fs-typescript/patientor/backend
       run: npm run lint
 
     - name: Start patientor backend server
-      working-directory: ./patientor/backend
+      working-directory: ./part09-fs-typescript/patientor/backend
       run: |
         npm start &
         echo $! > server.pid
         sleep 3
 
     - name: Install test dependencies
-      working-directory: ./patientor-api-tests
+      working-directory: ./part09-fs-typescript/patientor-api-tests
       run: npm install
 
     - name: Install Playwright browsers
-      working-directory: ./patientor-api-tests
+      working-directory: ./part09-fs-typescript/patientor-api-tests
       run: npx playwright install --with-deps chromium
 
     - name: Run API tests
-      working-directory: ./patientor-api-tests
+      working-directory: ./part09-fs-typescript/patientor-api-tests
       run: npm test
 
     - name: Upload test report
@@ -49,12 +50,12 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: patientor-api-tests/playwright-report/
+        path: ./part09-fs-typescript/patientor-api-tests/playwright-report/
         retention-days: 30
 
     - name: Stop patientor backend server
       if: always()
-      working-directory: ./patientor/backend
+      working-directory: ./part09-fs-typescript/patientor/backend
       run: |
         if [ -f server.pid ]; then
           kill $(cat server.pid) || true

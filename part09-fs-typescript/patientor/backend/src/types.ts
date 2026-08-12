@@ -1,8 +1,7 @@
-export const GenderValues = {
-  Male: 'male',
-  Female: 'female',
-  Other: 'other',
-} as const;
+import type { z } from 'zod';
+import type { NewPatientSchema } from './utils.ts';
+
+export const Gender = ['male', 'female', 'other'];
 
 export interface DiagnosisEntry {
   code: string,
@@ -10,15 +9,11 @@ export interface DiagnosisEntry {
   latin?: string,
 };
 
-export interface PatientEntry {
+export type NewPatientEntry = z.infer<typeof NewPatientSchema>;
+
+export interface PatientEntry extends NewPatientEntry {
   id: string,
-  name: string,
-  dateOfBirth: string,
-  ssn?: string,
-  gender: string,
-  occupation: string
 };
 
-export type Gender = typeof GenderValues[keyof typeof GenderValues];
 export type NonSensitivePatientEntry = Omit<PatientEntry, 'ssn'>;
 export type NonSensitiveDiagnosisEntry = Omit<DiagnosisEntry, 'latin'>;
