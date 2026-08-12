@@ -1,11 +1,11 @@
 import diagnosis from '../../data/diagnoses.ts';
-import type { DiagnosisEntry, NonSensitiveDiagnosisEntries } from '../types.ts';
+import type { DiagnosisEntry, NonSensitiveDiagnosisEntry } from '../types.ts';
 
 const getAll = () : DiagnosisEntry [] => {
   return diagnosis;
 };
 
-const getNonSensitiveDiagnosis = () : NonSensitiveDiagnosisEntries [] => {
+const getNonSensitiveDiagnosis = () : NonSensitiveDiagnosisEntry [] => {
   return diagnosis.map(({ code, name }) => ({
     code, name
   }));
