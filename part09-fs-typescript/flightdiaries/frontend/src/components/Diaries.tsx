@@ -5,11 +5,12 @@ const Diaries = ({ diaries } : { diaries: DiaryEntry[] }) => {
     <ol>
       {diaries.map((diary) =>
         <li key={diary.id}>
-          <ul>
-            <li>Date: {diary.date}</li>
-            <li>Visibility: {diary.visibility}</li>
-            <li>Weather: {diary.weather}</li>
-          </ul>
+          <div>
+            <b>Date: {diary.date}</b>
+            <br />
+            <p>Visibility: {diary.visibility}</p>
+            <p>Weather: {diary.weather}</p>
+          </div>
         </li>
       )}
     </ol>

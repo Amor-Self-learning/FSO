@@ -5,6 +5,7 @@ import NewDiary from './components/NewDiary.tsx';
 
 const App = () => {
   const [diaries, setDiaries] = useState<DiaryEntry []>([]);
+  const [notification, setMessage ] = useState({ message: '', ok: false});
 
   useEffect(() => {
     const fetchDaires = async () => {
@@ -29,10 +30,18 @@ const App = () => {
     setDiaries(diaries.concat(await res.json()));
   };
 
+  const setNotification = (message: string, ok: boolean) : void => {
+    setMessage({message, ok});
+    setTimeout(() => {
+      setMessage({message: '', ok: false});
+    }, 5000)
+  };
   return (
     <>
+      {notification && notification.message ? <p className={`notification ${notification.ok ? 'success' : 'error'}`}>{notification.message}</p> : ''}
+      <NewDiary addDiary={addDiary} setNotification={setNotification}/>
+      <br />
       <Diaries diaries={diaries} />
-      <NewDiary addDiary={addDiary}/>
     </>
   );
 };

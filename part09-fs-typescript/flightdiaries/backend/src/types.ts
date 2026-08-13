@@ -32,4 +32,19 @@ export interface DiaryEntry extends NewDiaryEntry {
   id: number;
 }
 
+export interface NewDiaryProps {
+  addDiary: (entry: NewDiaryEntry) => void;
+  setNotification: (message: string, ok: boolean) => void;
+}
+
+interface DiaryFormElements extends HTMLFormControlsCollection {
+  weather: HTMLInputElement;
+  visibility: HTMLInputElement;
+  date: HTMLInputElement;
+  comment: HTMLInputElement;
+}
+
+export interface DiaryFormElement extends HTMLFormElement {
+  readonly elements: DiaryFormElements;
+}
 export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;

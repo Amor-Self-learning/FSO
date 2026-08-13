@@ -1,0 +1,59 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+#root {
+  width: calc(10vw + 300px);
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+}
+.radio {
+  display: flex;
+  flex-wrap: wrap;
+}
+#root > ol {
+  margin: 0 auto;
+}
+.form > * {
+  display: flex;
+  justify-content: space-between;
+}
+input[type="text"], input[type="date"] {
+  font: inherit;
+  padding: 0.2rem;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+}
+
+button {
+  font: inherit;
+  background: inherit;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 0.4rem;
+  width: fit-content;
+  padding: 0.2rem;
+}
+.notification {
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+.notification.error {
+  border: 2px solid orangered;
+}
+.notification.success {
+  border: 2px solid green;
+}
