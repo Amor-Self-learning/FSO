@@ -1,5 +1,5 @@
 import express, { type Response } from 'express';
-import { getNonSensitivePatients }  from '../services/patientsService.ts';
+import { getNonSensitivePatients, getPatientById }  from '../services/patientsService.ts';
 import type { NonSensitivePatientEntry } from '../types.ts';
 import { NewPatientSchema } from '../utils.ts';
 import { v4 as uuid } from 'uuid';
@@ -25,6 +25,12 @@ patientsRouter.post('/', (req, res ) => {
       return res.status(400).send({ error: 'unkown error'});
     }
   }
+});
+
+patientsRouter.get('/:id', (req, res) => {
+  const patient = getPatientById(req.params.id);
+  if (patient) return res.json(patient);
+  return res.status(404).json({ error: 'Patient Not found'});
 });
 
 export default patientsRouter;
