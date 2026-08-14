@@ -3,7 +3,7 @@ name: Patientor API Tests
 on:
   push:
     paths: 
-      - 'part09-fs-typescript/**'
+      - 'part09-fs-typescript/patientor/**'
 
 jobs:
   test:
