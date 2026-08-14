@@ -1,6 +1,7 @@
 import { apiBaseUrl } from '../constants.ts';
 import type { Diagnosis, Entry } from '../types.ts';
 import { useState, useEffect } from 'react';
+import EntryElem from './Entry';
 
 const Entries = ({entries} : {entries: Entry[] }) => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
@@ -17,14 +18,10 @@ const Entries = ({entries} : {entries: Entry[] }) => {
 
   return (
     <>
+    <h3>Entries:</h3>
       {entries.map(entry => (
         <div key={entry.id}>
-          <p><b>{entry.date}</b> {entry.description}</p>
-          <ul>
-            {entry.diagnosisCodes && entry.diagnosisCodes.map(code => (
-              <li key={code}><b>{code}</b> {diagnosisString(code)}</li>
-            ))}
-          </ul>
+          <EntryElem entry={entry} diagnosisString={diagnosisString}/>
         </div>
       ))}
     </>
