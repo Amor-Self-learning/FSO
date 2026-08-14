@@ -37,6 +37,11 @@ const Entry = ({entry, diagnosisString} : {entry: Entry, diagnosisString ( a : s
               </ul>
             </div>
           }
+          <div>
+            <b>Discharged:</b>
+            <p>{entry.discharge.date}</p>
+            <p>{entry.discharge.criteria}</p>
+          </div>
           <p><b>Diagnosis By:</b> {entry.specialist}</p>
         </Box>
       );

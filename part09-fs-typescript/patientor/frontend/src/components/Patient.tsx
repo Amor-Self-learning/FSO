@@ -47,7 +47,7 @@ const Patient = ({patient}: {patient: Patient}) => {
         <Entries entries={entries}/>
       </CardContent>
       <CardActions>
-        <Button variant='contained' onClick={() => setFormVisible(!formVisible)}>New Entry</Button>
+        <Button variant='contained' onClick={() => setFormVisible(true)}>Add New Entry</Button>
       </CardActions>
     </Card>
   );

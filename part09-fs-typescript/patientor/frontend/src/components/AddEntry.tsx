@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  FormControl,
   TextField,
   InputLabel,
   Select,
@@ -26,63 +25,63 @@ interface Props {
 }
 
 const AddEntry = ({modalOpen, onClose, onSubmit, error}: Props) => {
-const [type, setType] = useState('');
-const [description, setDescription] = useState('');
-const [date, setDate] = useState('');
-const [specialist, setSpecialist] = useState('');
-const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
-const [healthCheckRating, setHealthCheckRating] = useState(0);
-const [dischargeDate, setDischargeDate] = useState('');
-const [criteria, setCriteria] = useState('');
-const [employerName, setEmployerName] = useState('');
-const [startDate, setStartDate] = useState('');
-const [endDate, setEndDate] = useState('');
-const [allDiagnosis, setAllDiagnosis] = useState<Diagnosis[]>([]);
+  const [type, setType] = useState('HealthCheck');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [specialist, setSpecialist] = useState('');
+  const [diagnosisCodes, setDiagnosisCodes] = useState<string[]>([]);
+  const [healthCheckRating, setHealthCheckRating] = useState(0);
+  const [dischargeDate, setDischargeDate] = useState('');
+  const [criteria, setCriteria] = useState('');
+  const [employerName, setEmployerName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [allDiagnosis, setAllDiagnosis] = useState<Diagnosis[]>([]);
 
-useEffect(() => {
-  fetch(`${apiBaseUrl}/diagnosis`).then(res => {
-    res.json().then(data => setAllDiagnosis(data));
-  });
-}, []);
+  useEffect(() => {
+    fetch(`${apiBaseUrl}/diagnosis`).then(res => {
+      res.json().then(data => setAllDiagnosis(data));
+    });
+  }, []);
 
-const handleChange = (event: SelectChangeEvent) => {
-  setType(event.target.value as string);
-};
-
-const handleSubmit = () => {
-  const entry = {description, date, specialist, diagnosisCodes};
-  switch (type) {
-    case 'HealthCheck':
-      const health = healthCheckRating as HealthCheckRating;
-      onSubmit({
-        type: 'HealthCheck',
-        ...entry,
-        healthCheckRating: health
-      });
-      break;
-    case 'Hospital':
-      onSubmit({
-        type: 'Hospital',
-        ...entry,
-        discharge: {
-          date: dischargeDate,
-          criteria
-        },
-      });
-      break;
-    case 'OccupationalHealthCare':
-      onSubmit({
-        type: 'OccupationalHealthcare',
-        ...entry,
-        employerName,
-        sickLeave: {
-          startDate,
-          endDate
-        }
-      });
-      break;
+  const handleChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as string);
   };
-};
+
+  const handleSubmit = () => {
+    const entry = {description, date, specialist, diagnosisCodes};
+    switch (type) {
+      case 'HealthCheck':
+        const health = healthCheckRating as HealthCheckRating;
+        onSubmit({
+          type: 'HealthCheck',
+          ...entry,
+          healthCheckRating: health
+        });
+        break;
+      case 'Hospital':
+        onSubmit({
+          type: 'Hospital',
+          ...entry,
+          discharge: {
+            date: dischargeDate,
+            criteria
+          },
+        });
+        break;
+      case 'OccupationalHealthCare':
+        onSubmit({
+          type: 'OccupationalHealthcare',
+          ...entry,
+          employerName,
+          sickLeave: {
+            startDate,
+            endDate
+          }
+        });
+        break;
+    };
+  };
   return (
     <Dialog fullWidth={true} open={modalOpen} onClose={onClose}
       slotProps={{
@@ -96,8 +95,7 @@ const handleSubmit = () => {
     <DialogContent>
       {error && <Alert severity="error">{error}</Alert>}
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth
-        sx={{ display: "flex", flexDirection: "column", gap: "0.5rem"}}>
+      <form style={{ display: "flex", flexDirection: "column", gap: "0.5rem"}}>
         <InputLabel id="entry-type">Type</InputLabel>
         <Select
           labelId="entry-type-label"
@@ -117,6 +115,7 @@ const handleSubmit = () => {
           onChange={({ target }) => setDescription(target.value)}
         />
         <TextField
+          label="Date"
           type="date"
           fullWidth
           value={date}
@@ -201,7 +200,7 @@ const handleSubmit = () => {
             />
           </>
         }
-      </FormControl>
+      </form>
       <Box sx={{display: "flex", gap: "1rem", marginTop: "1rem"}}>
         <Button variant="contained" color="success" onClick={handleSubmit}>Add</Button>
         <Button variant="outlined" color="error" onClick={onClose}>Cancel</Button>
