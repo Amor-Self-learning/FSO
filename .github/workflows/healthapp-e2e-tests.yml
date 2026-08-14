@@ -3,7 +3,7 @@ name: Health app E2E Tests
 on:
   push:
     paths:
-      - 'part09-fs-typescript/healthapp/**'
+      - 'part09-fs-typescript/**'
 
 jobs:
   test:

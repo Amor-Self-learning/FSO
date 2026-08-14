@@ -3,7 +3,7 @@ name: Patientor E2E Tests
 on:
   push:
     paths:
-      - 'part09-fs-typescript/patientor/**'
+      - 'part09-fs-typescript/**'
 
 jobs:
   test:
