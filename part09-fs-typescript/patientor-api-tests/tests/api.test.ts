@@ -13,9 +13,9 @@ test.describe('Patientor API', () => {
     });
   });
 
-  test.describe('GET /api/diagnoses', () => {
-    test('should return an array of diagnoses', async ({ request }) => {
-      const response = await request.get('/api/diagnoses');
+  test.describe('GET /api/diagnosis', () => {
+    test('should return an array of diagnosis', async ({ request }) => {
+      const response = await request.get('/api/diagnosis');
 
       expect(response.ok()).toBeTruthy();
       expect(response.status()).toBe(200);
@@ -26,7 +26,7 @@ test.describe('Patientor API', () => {
     });
 
     test('each diagnosis should have code and name fields', async ({ request }) => {
-      const response = await request.get('/api/diagnoses');
+      const response = await request.get('/api/diagnosis');
       const body = await response.json();
 
       for (const diagnosis of body) {
