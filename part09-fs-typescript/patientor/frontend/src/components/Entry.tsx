@@ -8,7 +8,7 @@ const Entry = ({entry, diagnosisString} : {entry: Entry, diagnosisString ( a : s
         <Box sx={{border: '2px solid black', padding: '1rem' , borderRadius: '1rem', marginTop: '1rem'}}>
           <p><b>{entry.date}</b></p>
           <p>{entry.description}</p>
-          <p>HealtCheck: {entry.healthCheckRating}</p>
+          <p>HealthCheck: {entry.healthCheckRating}</p>
           {entry.diagnosisCodes && 
             <div>
               <b>Diagnosis:</b>

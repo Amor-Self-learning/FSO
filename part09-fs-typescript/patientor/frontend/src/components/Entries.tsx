@@ -4,16 +4,16 @@ import { useState, useEffect } from 'react';
 import EntryElem from './Entry';
 
 const Entries = ({entries} : {entries: Entry[] }) => {
-  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
+  const [diagnosis, setDiagnosis] = useState<Diagnosis[]>([]);
   useEffect(() => {
-    const fetchDiagnoses = async () => {
-      const res = await fetch(`${apiBaseUrl}/diagnoses`);
-      setDiagnoses( await res.json());
+    const fetchDiagnosis = async () => {
+      const res = await fetch(`${apiBaseUrl}/diagnosis`);
+      setDiagnosis( await res.json());
     };
-    fetchDiagnoses();
+    fetchDiagnosis();
   }, []);
   const diagnosisString = (code : string) : string | undefined => {
-    return diagnoses.find(d => d.code === code)?.name;
+    return diagnosis.find(d => d.code === code)?.name;
   };
 
   return (
